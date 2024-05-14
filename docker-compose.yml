@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+
+  code-processing-db:
+    container_name: code-processing-db
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=code-processing
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
