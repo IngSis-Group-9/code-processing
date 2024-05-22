@@ -1,0 +1,27 @@
+#!/bin/sh
+
+echo '------------- Running pre-commit hook -------------'
+
+# Obtener la lista de archivos modificados que están en el staging area
+staged_files=$(git diff --name-only --cached)
+
+./gradlew ktlintFormat
+
+# Agregar solo los archivos que estaban en el staging area
+# Sirve para incluir los cambios de ktlintFormatter
+for file in $staged_files
+do
+  git add $file
+done
+
+./gradlew build
+
+# Verificar si el comando anterior fue exitoso
+if [ $? -ne 0 ]; then
+  echo '❌ Pre-commit failed. Please fix the above issues before committing again.'
+  exit 1
+fi
+
+echo '------------- ✅ Finished pre-commit hook -------------'
+
+exit 0
