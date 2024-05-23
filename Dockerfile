@@ -3,6 +3,7 @@ COPY . /home/gradle/src
 WORKDIR /home/gradle/src
 # Da permisos de ejecución al script gradlew
 RUN chmod +x ./gradlew
+RUN sed -i -e 's/\r$//' gradlew  # remove windows line endings
 RUN ./gradlew bootJar
 
 #RUN gradle build
