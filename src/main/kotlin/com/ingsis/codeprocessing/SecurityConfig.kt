@@ -1,24 +1,24 @@
-package com.ingsis.codeprocessing;
+package com.ingsis.codeprocessing
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-
-import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+class SecurityConfig {
+
 
     @Bean
-    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+    fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
-                .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().authenticated()
-                )
-                .oauth2Login(withDefaults());
-        return http.build();
+            .authorizeHttpRequests { authorizeRequests ->
+                authorizeRequests
+                    .requestMatchers("/fileTypes/getTypes").permitAll()  // Permitir acceso sin autenticación
+                    .anyRequest().authenticated()
+            }
+        return http.build()
     }
 }
