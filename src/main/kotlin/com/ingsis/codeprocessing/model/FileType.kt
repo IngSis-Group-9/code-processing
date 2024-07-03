@@ -1,6 +1,6 @@
 package com.ingsis.codeprocessing.model
 
-class FileType (
+class FileType(
     val language: String,
-    val extension: String
+    val extension: String,
 )

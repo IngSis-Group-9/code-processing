@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/fileTypes")
 class FileTypeController {
-
     @GetMapping("/getTypes")
     fun getFileTypes(): List<FileType> {
         // Aquí puedes retornar los tipos de archivos que necesites.
