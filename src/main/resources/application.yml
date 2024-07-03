@@ -1,0 +1,10 @@
+auth0:
+  audience: https://ingisis-group-9/
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-n5rdb5xcsb4ya1cg.us.auth0.com/
+          client-id: ${AUTH_CLIENT_ID}
+          client-secret: ${AUTH_CLIENT_SECRET}
