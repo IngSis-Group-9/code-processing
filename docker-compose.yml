@@ -13,6 +13,11 @@ services:
       DB_URL: jdbc:postgresql://code-processing-db:5432/code-processing
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_STREAM_REQUEST_LINTER_KEY: request_linter
+      REDIS_STREAM_RESPONSE_LINTER_KEY: response_linter
+      REDIS_GROUP_LINTER: linter_group
 
   code-processing-db:
     container_name: code-processing-db
@@ -23,3 +28,9 @@ services:
       - POSTGRES_DB=code-processing
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+
+  redis:
+    container_name: "redis"
+    image: redis:6-alpine
+    ports:
+      - "6379:6379"

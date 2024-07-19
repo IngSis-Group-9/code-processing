@@ -1,0 +1,36 @@
+auth0:
+  audience: https://ingisis-group-9/
+spring:
+  application:
+    name: Code Processing
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5435/code-processing}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.hibernate.format_sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-n5rdb5xcsb4ya1cg.us.auth0.com/
+          client-id: ${AUTH_CLIENT_ID}
+          client-secret: ${AUTH_CLIENT_SECRET}
+redis:
+  stream:
+    request_linter_key: ${REDIS_STREAM_REQUEST_LINTER_KEY:request_linter}
+    response_linter_key: ${REDIS_STREAM_RESPONSE_LINTER_KEY:response_linter}
+  groups:
+    linter: ${REDIS_GROUP_LINTER:linter_group}
+
+server:
+  port: 8084
+  error:
+    include-message: always
+azureBucket:
+  url: ${AZURE_BUCKET_URL:http://asset_service:8080/v1/asset/snippets}
