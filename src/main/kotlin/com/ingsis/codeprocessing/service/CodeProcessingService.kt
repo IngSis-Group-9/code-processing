@@ -38,7 +38,7 @@ class CodeProcessingService {
             is SuccessResponse -> {
                 log.info("Interpretation successful")
                 InterpreterResponse(
-                    response.message?.split("\n") ?: emptyList(),
+                    response.message!!.split("\n").filter { it.isNotEmpty() },
                     emptyList(),
                 )
             }
@@ -67,12 +67,12 @@ class CodeProcessingService {
             )
 
         try {
-            return snippetRunner.formatSnippet(snippetContent, PrintScriptVersion.V2, formatterRules)
+            val response = snippetRunner.formatSnippet(snippetContent, PrintScriptVersion.V2, formatterRules)
+            log.info("Successfully formatted code snippet")
+            return response
         } catch (e: Exception) {
             log.error("Error while formatting code snippet: ${e.message}")
             throw BadRequestException("Error while formatting code snippet: ${e.message}")
-        } finally {
-            log.info("Successfully formatted code snippet")
         }
     }
 
@@ -88,12 +88,12 @@ class CodeProcessingService {
             )
 
         try {
-            return snippetRunner.analyzeSnippet(snippetContent, PrintScriptVersion.V2, scaRules)
+            val response = snippetRunner.analyzeSnippet(snippetContent, PrintScriptVersion.V2, scaRules)
+            log.info("Successfully linted code snippet")
+            return response
         } catch (e: Exception) {
             log.error("Error while linting code snippet: ${e.message}")
             throw BadRequestException("Error while linting code snippet: ${e.message}")
-        } finally {
-            log.info("Successfully linted code snippet")
         }
     }
 }
