@@ -1,5 +1,7 @@
 package com.ingsis.codeprocessing.service
 
+import com.ingsis.codeprocessing.logs.CorrelationIdFilter.Companion.CORRELATION_ID_KEY
+import org.slf4j.MDC
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -18,7 +20,9 @@ class AssetService(
     fun getSnippet(id: String): ResponseEntity<String> {
         try {
             log.info("Getting snippet: { id: $id })")
-            val headers = HttpHeaders()
+            val headers = HttpHeaders().apply {
+                set("X-Correlation-Id", MDC.get(CORRELATION_ID_KEY))
+            }
             return rest.exchange("$bucketUrl/$id", HttpMethod.GET, HttpEntity<String>(headers), String::class.java)
         } catch (e: Exception) {
             log.error("Error getting snippet with id: $id", e)
